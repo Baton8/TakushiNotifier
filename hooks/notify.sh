@@ -40,25 +40,13 @@ if [ -f "$TRANSCRIPT_PATH" ]; then
 
     # メッセージが取得できた場合の処理
     if [ -n "$LAST_MESSAGE" ]; then
-        # 要約生成（最初の100文字を使用）
-        SUMMARY=$(echo "$LAST_MESSAGE" | head -c 100 | sed 's/[[:space:]]*$//')
-        if [ ${#LAST_MESSAGE} -gt 100 ]; then
-            SUMMARY="${SUMMARY}..."
-        fi
-
-        # メッセージの動的生成
-        MESSAGE=""
-        GENERATE_MESSAGE_SCRIPT="$HOOKS_DIR/generate_message.sh"
-        if [ -f "$GENERATE_MESSAGE_SCRIPT" ]; then
-            MESSAGE=$(echo "$SUMMARY" | bash "$GENERATE_MESSAGE_SCRIPT" 2>/dev/null)
-        fi
-
-        # デフォルト文例（生成に失敗した場合）
+        # 最後のメッセージの1行目を取得（最大100文字）
+        MESSAGE=$(echo "$LAST_MESSAGE" | head -n 1 | head -c 100 | sed 's/[[:space:]]*$//')
+        
+        # メッセージが空の場合はデフォルト文例
         if [ -z "$MESSAGE" ]; then
             MESSAGE="処理が完了しました。"
         fi
-
-
 
         # 通知実行
         # terminal-notifier使用（Macネイティブ通知）
