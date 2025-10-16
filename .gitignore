@@ -1,0 +1,10 @@
+# Hooks log files
+hooks/notify.log
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+
