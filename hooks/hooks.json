@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "./hooks/notify.sh"
+            "command": "./notify.sh"
           }
         ]
       }
