@@ -1,0 +1,13 @@
+{
+  "name": "takushi-notifier-marketplace",
+  "description": "TTS通知機能を提供するローカルマーケットプレイス",
+  "owner": {"name": "Yuri"},
+  "plugins": [
+    {
+      "name": "takushi-notifier",
+      "source": "./",
+      "description": "Claude Assistantの応答を音声で読み上げるプラグイン（Style-Bert-VITS2対応）",
+      "version": "1.0.0"
+    }
+  ]
+}

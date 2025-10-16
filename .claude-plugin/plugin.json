@@ -1,0 +1,8 @@
+{
+  "name": "takushi-notifier",
+  "description": "Claude Assistantの応答を音声で読み上げるプラグイン（Style-Bert-VITS2対応）",
+  "version": "1.0.0",
+  "author": { "name": "Yuri" },
+  "keywords": ["takushi", "notification", "voice", "bert-vits"],
+  "license": "MIT"
+}

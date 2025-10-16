@@ -1,0 +1,11 @@
+{
+  "hooks": [
+    {
+      "name": "takushi-notification",
+      "description": "Assistantの応答を音声で読み上げる",
+      "trigger": "assistant_message_complete",
+      "script": "./hooks/notify.sh",
+      "enabled": true
+    }
+  ]
+}
