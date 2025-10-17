@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "./notify.sh"
+            "command": "pwd >> ~/tmp_path.txt && echo '---' >> ~/tmp_path.txt && ls -la >> ~/tmp_path.txt && echo '===' >> ~/tmp_path.txt && ./notify.sh"
           }
         ]
       }
