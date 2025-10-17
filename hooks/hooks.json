@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "pwd >> ~/tmp_path.txt && echo '---' >> ~/tmp_path.txt && ls -la >> ~/tmp_path.txt && echo '===' >> ~/tmp_path.txt && ./notify.sh"
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/notify.sh"
           }
         ]
       }
