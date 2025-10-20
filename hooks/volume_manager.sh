@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Takushi音量管理スクリプト
-# 使用方法: ./volume_manager.sh [volume] [action]
+# 使用方法: ./volume_manager.sh [action] [args...]
 # action: set, get, init
 
 CONFIG_DIR="$HOME/.config/takushi_notifier"
@@ -20,28 +20,28 @@ init_config() {
 # 音量設定（0-100を0.0-1.0に変換）
 set_volume() {
     local volume_percent="$1"
-    
+
     # 引数チェック
     if ! [[ "$volume_percent" =~ ^[0-9]+$ ]]; then
         echo "エラー: 音量は0-100の整数で指定してください"
         exit 1
     fi
-    
+
     if [ "$volume_percent" -lt 0 ] || [ "$volume_percent" -gt 100 ]; then
         echo "エラー: 音量は0-100の範囲で指定してください"
         exit 1
     fi
-    
+
     # 0-100を0.0-1.0に変換
     local volume_float=$(echo "scale=2; $volume_percent / 100" | bc -l)
-    
+
     # 設定ファイルを更新
     init_config
     cat > "$CONFIG_FILE" << EOF
 AFPLAY_VOLUME=$volume_float
 VOLUME_PERCENT=$volume_percent
 EOF
-    
+
     echo "Takushi音量を${volume_percent}%に設定しました (afplay: ${volume_float})"
 }
 

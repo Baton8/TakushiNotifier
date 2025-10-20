@@ -42,10 +42,22 @@ if [ -f "$TRANSCRIPT_PATH" ]; then
     if [ -n "$LAST_MESSAGE" ]; then
         # 最後のメッセージの1行目を取得（最大100文字）
         MESSAGE=$(echo "$LAST_MESSAGE" | head -n 1 | head -c 100 | sed 's/[[:space:]]*$//')
-        
+
         # メッセージが空の場合はデフォルト文例
         if [ -z "$MESSAGE" ]; then
             MESSAGE="処理が完了しました。"
+        fi
+
+        # プロジェクト名を取得して追加
+        PROJECT_PATH=$(echo "$INPUT" | jq -r '.cwd // empty')
+        if [ -n "$PROJECT_PATH" ]; then
+            PROJECT_MANAGER="$HOOKS_DIR/project_manager.sh"
+            if [ -f "$PROJECT_MANAGER" ]; then
+                PROJECT_NAME=$(bash "$PROJECT_MANAGER" get "$PROJECT_PATH" 2>/dev/null || echo "")
+                if [ -n "$PROJECT_NAME" ]; then
+                    MESSAGE="${PROJECT_NAME}です。${MESSAGE}"
+                fi
+            fi
         fi
 
         # 通知実行

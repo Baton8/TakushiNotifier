@@ -7,4 +7,5 @@ hooks/notify.log
 # Editor
 .vscode/
 .idea/
+.trash
 
