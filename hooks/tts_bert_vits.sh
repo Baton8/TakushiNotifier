@@ -38,8 +38,12 @@ SAVE_FILE="${2:-}"  # 第2引数で出力ファイル名を指定可能（省略
 
 # 出力ファイルの設定
 if [ -z "$SAVE_FILE" ]; then
-    # ファイル名が指定されていない場合は一時ファイルを使用
-    OUTPUT_FILE=$(mktemp /tmp/tts_XXXXXX.wav)
+    # ファイル名が指定されていない場合は一時ファイルを使用（macOS対応）
+    OUTPUT_FILE=$(mktemp).wav
+    if [ $? -ne 0 ] || [ -z "$OUTPUT_FILE" ]; then
+        echo "エラー: 一時ファイルの作成に失敗しました"
+        exit 1
+    fi
     TEMP_FILE=true
 else
     OUTPUT_FILE="$SAVE_FILE"
@@ -81,7 +85,7 @@ HTTP_STATUS=$(curl -s -X POST "${API_BASE_URL}/api/synthesis" \
   -w "%{http_code}")
 
 # HTTPステータスコードチェック
-if [ "$HTTP_STATUS" -eq 200 ]; then
+if [ -n "$HTTP_STATUS" ] && [ "$HTTP_STATUS" -eq 200 ]; then
     if [ -f "${OUTPUT_FILE}" ]; then
         if [ "$TEMP_FILE" = true ]; then
             # 一時ファイルの場合は自動再生して削除
