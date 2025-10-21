@@ -68,17 +68,30 @@ get_project_name() {
     init_config
 
     if [ -f "$PROJECT_NAMES_FILE" ]; then
-        local var_name="PROJECT_NAME_${project_path//\//_}"
-        local project_name=$(grep "^${var_name}=" "$PROJECT_NAMES_FILE" | cut -d'=' -f2- | tr -d '"')
-
-        if [ -n "$project_name" ]; then
-            echo "$project_name"
-        else
-            echo ""
-        fi
-    else
-        echo ""
+        local current_path="$project_path"
+        
+        # 現在のパスから親階層まで順に探索
+        while [ -n "$current_path" ]; do
+            local var_name="PROJECT_NAME_${current_path//\//_}"
+            local project_name=$(grep "^${var_name}=" "$PROJECT_NAMES_FILE" | cut -d'=' -f2- | tr -d '"')
+            
+            if [ -n "$project_name" ]; then
+                echo "$project_name"
+                return
+            fi
+            
+            # 親ディレクトリに移動
+            if [ "$current_path" = "/" ] || [ "$current_path" = "." ]; then
+                break
+            fi
+            current_path=$(dirname "$current_path")
+            if [ "$current_path" = "." ]; then
+                break
+            fi
+        done
     fi
+    
+    echo ""
 }
 
 # メイン処理

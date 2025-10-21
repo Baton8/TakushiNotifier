@@ -55,7 +55,7 @@ if [ -f "$TRANSCRIPT_PATH" ]; then
             if [ -f "$PROJECT_MANAGER" ]; then
                 PROJECT_NAME=$(bash "$PROJECT_MANAGER" get "$PROJECT_PATH" 2>/dev/null || echo "")
                 if [ -n "$PROJECT_NAME" ]; then
-                    MESSAGE="${PROJECT_NAME}です。${MESSAGE}"
+                    MESSAGE="${PROJECT_NAME}のたくしです。${MESSAGE}"
                 fi
             fi
         fi
